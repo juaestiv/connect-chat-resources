@@ -24,8 +24,18 @@ When the guide is shown you can locate a "Test Chat" link on the first step.
 Clicking over it you can simulate Customer and Agent conversations on the same screen. 
 Click over the link "Test Settings" to select the flow to test. 
 
+TBD Insert Image
+
 # Create Lambda integration for customer identification. 
 ## Create a DynamoDB Table
+* Name of the table: customerLookup
+* Primary Key: phoneNum
+
+Create an index:
+* Primary Key: emailAddress
+
+Create an Item in text format:
+
 ```json
 {
     "accountNum" : "74235003",
@@ -148,6 +158,52 @@ function buildResponse(isSuccess, recordFound, lastName, firstName, emailAddress
 }
 
 
+
+```
+
+## Edit the lambda role
+Add inline policies to the lambda role for:
+
+Service -> DynamoDB
+Actions -> List and Read
+Resources-> Add ARN to the index and to the table. 
+
+arn:aws:dynamodb:us-east-1:<account_number>:table/customerLookup
+arn:aws:dynamodb:us-east-1:<account_number>:table/customerLookup/index/emailAddress-index
+
+
+## Create a Test Event
+
+```json
+{
+    "Details": {
+        "ContactData": {
+            "Attributes": {
+                "email": "youremail@address.com"
+            },
+            "Channel": "CHAT",
+            "ContactId": "ef26d146-xxx-4e1e-a481-87fc64ce1112",
+            "CustomerEndpoint": null,
+            "Description": null,
+            "InitialContactId": "ef26d146-xxx-4e1e-a481-87fc64ce1112",
+            "InitiationMethod": "API",
+            "InstanceARN": "arn:aws:connect:us-east-1:<account_number>:instance/xxxxxxxx-xxxx-xxxxx-xxx-xxx",
+            "LanguageCode": "en-US",
+            "MediaStreams": {
+                "Customer": {
+                    "Audio": {}
+                }
+            },
+            "Name": null,
+            "PreviousContactId": "ef26d146-xxxx-4e1e-a481-87fc64ce1112",
+            "Queue": null,
+            "References": {},
+            "SystemEndpoint": null
+        },
+        "Parameters": {}
+    },
+    "Name": "ContactFlowEvent"
+}
 
 ```
 
