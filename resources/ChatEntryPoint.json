@@ -1,0 +1,185 @@
+{
+  "modules": [
+    {
+      "id": "845cb501-6709-441e-83f7-bb7d2f1f15a7",
+      "type": "Transfer",
+      "branches": [
+        {
+          "condition": "AtCapacity",
+          "transition": "09740a09-5851-4e94-9a1a-61fdebb4f4f3"
+        },
+        {
+          "condition": "Error",
+          "transition": "9ab1b319-e0ea-49c1-b84d-5dff7730e5fd"
+        }
+      ],
+      "parameters": [],
+      "metadata": {
+        "position": { "x": 839.2499963221686, "y": 19 },
+        "useDynamic": false,
+        "queue": null
+      },
+      "target": "Queue"
+    },
+    {
+      "id": "09740a09-5851-4e94-9a1a-61fdebb4f4f3",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "2610cbba-5ca8-4591-93e0-0e7130fbc3d3"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Welcome to XYX’s customer service.",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": {
+        "position": { "x": 1074.2499963221685, "y": 25 },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "a08c6982-2583-464a-acf6-02738d7e35a4",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "2610cbba-5ca8-4591-93e0-0e7130fbc3d3"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "We’re sorry. Our agents are only available Monday through Saturday from 7 AM to 8 PM. Please try again during this hours",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": {
+        "position": { "x": 1065.2499963221685, "y": 216 },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "2610cbba-5ca8-4591-93e0-0e7130fbc3d3",
+      "type": "Disconnect",
+      "branches": [],
+      "parameters": [],
+      "metadata": { "position": { "x": 1341.2499963221685, "y": 236 } }
+    },
+    {
+      "id": "bcc44b9c-4cfb-4706-885e-9ee940e8e84e",
+      "type": "CheckHoursOfOperation",
+      "branches": [
+        {
+          "condition": "True",
+          "transition": "845cb501-6709-441e-83f7-bb7d2f1f15a7"
+        },
+        {
+          "condition": "False",
+          "transition": "a08c6982-2583-464a-acf6-02738d7e35a4"
+        },
+        {
+          "condition": "Error",
+          "transition": "9ab1b319-e0ea-49c1-b84d-5dff7730e5fd"
+        }
+      ],
+      "parameters": [],
+      "metadata": { "position": { "x": 603.2499963221686, "y": 17 } }
+    },
+    {
+      "id": "9ab1b319-e0ea-49c1-b84d-5dff7730e5fd",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "2610cbba-5ca8-4591-93e0-0e7130fbc3d3"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "We are sorry. An unexpected error happened. Please wait a few minutes and try again",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": {
+        "position": { "x": 572.2499963221686, "y": 378 },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "0e89c8b7-f048-4103-8777-5e324917ae41",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "4848b31e-bc91-449b-a4f3-a5c5345c2691"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Welcome to XYX’s customer service.",
+          "namespace": null
+        },
+        { "name": "TextToSpeechType", "value": "text" }
+      ],
+      "metadata": {
+        "position": { "x": 150.2499963221686, "y": 20 },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "4848b31e-bc91-449b-a4f3-a5c5345c2691",
+      "type": "SetQueue",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "bcc44b9c-4cfb-4706-885e-9ee940e8e84e"
+        },
+        {
+          "condition": "Error",
+          "transition": "9ab1b319-e0ea-49c1-b84d-5dff7730e5fd"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Queue",
+          "value": "arn:aws:connect:us-east-1:<your account>:instance/<your instance>/queue/2c493625-4a45-42b0-a652-088e89fb19de",
+          "namespace": null,
+          "resourceName": "BasicQueue"
+        }
+      ],
+      "metadata": {
+        "position": { "x": 379.24999632216856, "y": 17 },
+        "useDynamic": false,
+        "queue": {
+          "id": "arn:aws:connect:us-east-1:<your account>:instance/<your instance>/queue/2c493625-4a45-42b0-a652-088e89fb19de",
+          "text": "BasicQueue",
+          "arn": null,
+          "metricDetail": null,
+          "resourceId": null
+        }
+      }
+    }
+  ],
+  "version": "1",
+  "type": "contactFlow",
+  "start": "0e89c8b7-f048-4103-8777-5e324917ae41",
+  "metadata": {
+    "entryPointPosition": { "x": 17.2499963221686, "y": 20 },
+    "snapToGrid": false,
+    "name": "Chat entry point1",
+    "description": null,
+    "type": "contactFlow",
+    "status": "saved",
+    "hash": "e89c0e8b4777c43bd32db8f2d1617db1748b8012530c5f68877400bb6db36ad1"
+  }
+}
