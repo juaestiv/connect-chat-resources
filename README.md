@@ -15,11 +15,13 @@ Prerequisites:
 
 ## Create the flow
 Create the following flow or import the attached resources.  
-TBD
+
 ![Image of Flow](https://github.com/juaestiv/connect-chat-resources/blob/master/images/ChatEntryPointFlow.png)
 
 You can download the json file here:
-[download this](resources/ChatEntryPoint.json.zip)
+[Flow to import](resources/ChatEntryPoint.json.zip)
+
+You can use the import feature to import this flow
 
 ## Test the Flow
 Open the Amazon Connect Console and navigate to the dasboard. Yoy can show/hide the guide in an hyperlink located near of the top on left hand side. 
@@ -28,7 +30,8 @@ When the guide is shown you can locate a "Test Chat" link on the first step.
 Clicking over it you can simulate Customer and Agent conversations on the same screen. 
 Click over the link "Test Settings" to select the flow to test. 
 
-TBD Insert Image
+
+![Image of Test Chat](https://github.com/juaestiv/connect-chat-resources/blob/master/images/TestingChat.png)
 
 # Create Lambda integration for customer identification. 
 ## Create a DynamoDB Table
