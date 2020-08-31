@@ -19,7 +19,7 @@ TBD
 ![Image of Flow](https://github.com/juaestiv/connect-chat-resources/blob/master/images/ChatEntryPointFlow.png)
 
 You can download the json file here:
-[download this](resources/ChatEntryPoint.json)
+[download this](resources/ChatEntryPoint.json.zip)
 
 ## Test the Flow
 Open the Amazon Connect Console and navigate to the dasboard. Yoy can show/hide the guide in an hyperlink located near of the top on left hand side. 
