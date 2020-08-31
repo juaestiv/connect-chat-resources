@@ -59,6 +59,15 @@ Create an Item in text format:
 ```
 
 ## Create a lambda function
+From AWS Console look for Lambda service. 
+* Click Create a Function. 
+* Select "Author from scratch"
+* Give it the name customerLookup
+* Select Node.js 12,x as runtime
+* Keep the remaining defaults
+
+Replace the code with the following code:
+
 ```js
 var AWS = require("aws-sdk");
 var docClient = new AWS.DynamoDB.DocumentClient();
@@ -169,6 +178,10 @@ function buildResponse(isSuccess, recordFound, lastName, firstName, emailAddress
 ```
 
 ## Edit the lambda role
+* Look for the tab Permissions
+* Click on the hyperlink to the lambda role
+* Add Inline Policy
+
 Add inline policies to the lambda role for:
 
 Service -> DynamoDB
@@ -177,6 +190,8 @@ Resources-> Add ARN to the index and to the table.
 
 arn:aws:dynamodb:us-east-1:<account_number>:table/customerLookup
 arn:aws:dynamodb:us-east-1:<account_number>:table/customerLookup/index/emailAddress-index
+
+![Image of Lambda Role](https://github.com/juaestiv/connect-chat-resources/blob/master/images/LambdaRole.png)
 
 
 ## Create a Test Event
