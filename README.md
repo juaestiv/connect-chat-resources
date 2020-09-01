@@ -21,7 +21,8 @@ Create the following flow or import the attached resources.
 You can download the json file here:
 [Flow to import](resources/ChatEntryPoint.json.zip)
 
-You can use the import feature to import this flow
+You can use the import feature to import this flow. Just Create a new flow and click on the arrow on the left hand side near of the top to drop down the Import Flow option. The set up a name and save and publish the flow. Take into account that you must tuo unzip de file first. 
+
 
 ## Test the Flow
 Open the Amazon Connect Console and navigate to the dasboard. Yoy can show/hide the guide in an hyperlink located near of the top on left hand side. 
@@ -35,6 +36,12 @@ Click over the link "Test Settings" to select the flow to test.
 
 # Create Lambda integration for customer identification. 
 ## Create a DynamoDB Table
+Open the AWS Console and navigate to DynamoDB. Select "Tables" from left hand tree and click over "Create a Table".
+
+Create a table with the following properties
+Table Name | customerLookup
+Primary Key | phoneNum
+
 * Name of the table: customerLookup
 * Primary Key: phoneNum
 
