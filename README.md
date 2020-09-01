@@ -340,7 +340,25 @@ You can execute this test event and check if returns the appropiate parameters
 
 
 ## Edit the Flow to search the customer information using email as identifier
+To be able to access to the lambda funtion we need to whitelist it in our instance.
+TBD
+
 Open the **Chat Entry Point** flow that we created at the beginning. 
+You have to add the following blocks just after the **Start** and before the **Welcome Prompt**
+* Set Logging behaviour. (Enabled)
+* Invoke Lambda Function. (Select the lambda created from the drowdown and set up the time out to 8)
+* A new prompt block to handle the lambda error. (Text To Speech: "We are experiencing technical difficulties, please try again later")
+* A disconnect block. 
+
+Edit the Welcome prompt like this:
+Welcome to XYX’s customer service **$.External.firstName**
+
+Link the blocks as follows
+
+TBD
+
+
+
 
 
 # Creating a Lex bot to automate your answers. 
