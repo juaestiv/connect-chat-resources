@@ -99,6 +99,7 @@ exports.handler = (event, context, callback) => {
       ExpressionAttributeValues: { ":varNumber": CallerID }
     };
     QueryDynamoDB(params);
+  
 
   //Chat Channel. Looking by email address
   } else if (Channel == 'CHAT') {
@@ -131,6 +132,7 @@ function QueryDynamoDB(params)
                 if(data.Items.length == 1)
                 {
                     var recordFound = "True";
+                    var message = "One record found";
                     var lastName = data.Items[0].lastName;
                     var firstName = data.Items[0].firstName;
                     var emailAddress = data.Items[0].emailAddress;
@@ -140,7 +142,7 @@ function QueryDynamoDB(params)
                     var addressZip = data.Items[0].addressZip;
                     var streetNum = data.Items[0].streetNum;
                     var phoneNum = data.Items[0].phoneNum;
-                    callback(null, buildResponse(true, recordFound, lastName, firstName, emailAddress, accountNum, addressCity, addressStreet, addressZip, streetNum, phoneNum));
+                    callback(null, buildResponse(true, recordFound, message, lastName, firstName, emailAddress, accountNum, addressCity, addressStreet, addressZip, streetNum, phoneNum));
                     ReturnResult.EmployeeID = data.Items[0].EmployeeID;
                     ReturnResult.EmployeeName = data.Items[0].EmployeeName;
                     ReturnResult.EmployeePIN = data.Items[0].EmployeePIN;
@@ -160,6 +162,7 @@ function buildResponse(isSuccess, message, recordFound, lastName, firstName, ema
   if (isSuccess) {
     return {
       recordFound: recordFound,
+      message:message,
       lastName: lastName,
       firstName: firstName,
       emailAddress:emailAddress,
@@ -198,7 +201,7 @@ Add inline policies to the lambda role for:
 Field | Setting
 ------------ | -------------
 Service|DynamoDB
-Actions|List and Read
+Actions|**List** and **Read**
 Resources|Add ARN to the **index** and to the **table**. 
 
 Typically the format for those ARN are as follows (with customerLookup table)
@@ -255,6 +258,8 @@ Review and Name the policy. The JSON will be similar to this:
 Come back to the lambda function and create a test event
 
 ## Create a Chat Test Event
+At the main screen in the lambda function you will find a **Test** button. Clicking over it you can create a test. Amazon Connect will send an event in json format like the one below. Just copy/paste and use it for testing. 
+In the attributes object you have to setup the email address that you have used in the created item on DynamoDB
 
 ```json
 {
@@ -288,6 +293,10 @@ Come back to the lambda function and create a test event
 }
 
 ```
+
+You have to receive a **Execution results: succeeded**
+
+Same procedure with a json event for a call. This time replase the **CallerID** in parameter sections
 
 ## Create a Call Event
 ```json
@@ -331,7 +340,8 @@ You can execute this test event and check if returns the appropiate parameters
 
 
 ## Edit the Flow to search the customer information using email as identifier
-TBD
+Open the **Chat Entry Point** flow that we created at the beginning. 
+
 
 # Creating a Lex bot to automate your answers. 
 TBD
