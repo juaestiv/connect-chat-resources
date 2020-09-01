@@ -193,8 +193,9 @@ arn:aws:dynamodb:us-east-1:<account_number>:table/customerLookup/index/emailAddr
 
 ![Image of Lambda Role](https://github.com/juaestiv/connect-chat-resources/blob/master/images/LambdaRole.png)
 
+Come back to the lambda function and create a test event
 
-## Create a Test Event
+## Create a Chat Test Event
 
 ```json
 {
@@ -228,4 +229,59 @@ arn:aws:dynamodb:us-east-1:<account_number>:table/customerLookup/index/emailAddr
 }
 
 ```
+
+## Create a Call Event
+```json
+{
+    "Details": {
+        "ContactData": {
+            "Attributes": {},
+            "Channel": "VOICE",
+            "ContactId": "8693452c-7fd1-462b-adb6-fcf18996aabb",
+            "CustomerEndpoint": {
+                "Address": "+34674870071",
+                "Type": "TELEPHONE_NUMBER"
+            },
+            "Description": null,
+            "InitialContactId": "8693452c-7fd1-462b-adb6-fcf18996aabb",
+            "InitiationMethod": "INBOUND",
+            "InstanceARN": "arn:aws:connect:us-east-1:150934812383:instance/0879ee04-aaaa-4668-8ef5-5ba3f60d0ca3",
+            "LanguageCode": "en-US",
+            "MediaStreams": {
+                "Customer": {
+                    "Audio": null
+                }
+            },
+            "Name": null,
+            "PreviousContactId": "8693452c-7fd1-462b-adb6-fcf18996aabb",
+            "Queue": null,
+            "References": {},
+            "SystemEndpoint": {
+                "Address": "+34902018610",
+                "Type": "TELEPHONE_NUMBER"
+            }
+        },
+        "Parameters": {
+            "CallerID": "+34674870071"
+        }
+    },
+    "Name": "ContactFlowEvent"
+}
+```
+You can execute this test event and check if returns the appropiate parameters
+
+
+## Edit the Flow to search the customer information using email as identifier
+TBD
+
+# Creating a Lex bot to automate your answers. 
+TBD
+
+# Create a customer application 
+npx create-react-app chat-website-test
+cd chat-website-test/
+npm install amazon-connect-chatjs
+
+
+
 
