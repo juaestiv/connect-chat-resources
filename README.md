@@ -44,13 +44,15 @@ Field | Setting
 Table Name | customerLookup
 Primary Key | phoneNum
 
-* Name of the table: customerLookup
-* Primary Key: phoneNum
+Navigate to Index tab and create an index:
 
-Create an index:
-* Primary Key: emailAddress
+Field | Setting
+------------ | -------------
+Primary Key | emailAddress
 
-Create an Item in text format:
+Navigate to Items tab
+
+Create an Item in text format with the following json code:
 
 ```json
 {
@@ -69,6 +71,7 @@ Create an Item in text format:
 
 ## Create a lambda function
 From AWS Console look for Lambda service. 
+
 * Click Create a Function. 
 * Select "Author from scratch"
 * Give it the name customerLookup
@@ -96,7 +99,6 @@ exports.handler = (event, context, callback) => {
       ExpressionAttributeValues: { ":varNumber": CallerID }
     };
     QueryDynamoDB(params);
-    
 
   //Chat Channel. Looking by email address
   } else if (Channel == 'CHAT') {
@@ -115,11 +117,6 @@ exports.handler = (event, context, callback) => {
             console.log("No email");
             callback(null, buildResponse(false));      
             }
-    
-    
-    
-  
-    
   }
   
 function QueryDynamoDB(params)
@@ -147,20 +144,19 @@ function QueryDynamoDB(params)
                     ReturnResult.EmployeeID = data.Items[0].EmployeeID;
                     ReturnResult.EmployeeName = data.Items[0].EmployeeName;
                     ReturnResult.EmployeePIN = data.Items[0].EmployeePIN;
+                } else if (data.Items.length > 1) {
+                  callback(null, buildResponse(false, "More than one record found"));
+                } else {
+                  callback(null, buildResponse(false, "No Record Found"));
                 }
             }
             
 
         });
     }
-  
- 
-  
 };
 
-
- 
-function buildResponse(isSuccess, recordFound, lastName, firstName, emailAddress, accountNum, addressCity, addressStreet, addressZip, streetNum, phoneNum) {
+function buildResponse(isSuccess, message, recordFound, lastName, firstName, emailAddress, accountNum, addressCity, addressStreet, addressZip, streetNum, phoneNum) {
   if (isSuccess) {
     return {
       recordFound: recordFound,
@@ -177,12 +173,19 @@ function buildResponse(isSuccess, recordFound, lastName, firstName, emailAddress
     };
   }
   else {
-    console.log("Lambda returned error to Connect");
-    return { lambdaResult: "Error" };
+    
+    if (message){
+      return {
+        message:message
+      }
+      
+    } else {
+      console.log("Lambda returned error to Connect");
+      return { lambdaResult: "Undetermined error" };
+    }
+    
   }
 }
-
-
 
 ```
 
