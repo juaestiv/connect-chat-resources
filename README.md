@@ -39,7 +39,7 @@ Click over the link "Test Settings" to select the flow to test.
 Open the AWS Console and navigate to DynamoDB. Select "Tables" from left hand tree and click over "Create a Table".
 
 Create a table with the following properties
-First Header | Second Header
+  |  
 ------------ | -------------
 Table Name | customerLookup
 Primary Key | phoneNum
