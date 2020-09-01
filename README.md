@@ -10,8 +10,8 @@ These are the steps that we will follow
 
 # Create a chat entry point flow
 Prerequisites: 
-* Create two "Hours of operation" tables and call them "Sales and Billing" and "Customer Service"
-* Create 3 queues and name them "Billing", "Customer Service" and "Sales" 
+* Create two **"Hours of operation"** tables and call them "Sales and Billing" and "Customer Service"
+* Create 3 **queues** and name them "Billing", "Customer Service" and "Sales" 
 
 ## Create the flow
 Create the following flow or import the attached resources.  
@@ -73,9 +73,9 @@ Create an Item in text format with the following json code:
 From AWS Console look for Lambda service. 
 
 * Click Create a Function. 
-* Select "Author from scratch"
-* Give it the name customerLookup
-* Select Node.js 12,x as runtime
+* Select **"Author from scratch"**
+* Give it the name **customerLookup**
+* Select **Node.js 12**,x as runtime
 * Keep the remaining defaults
 
 Replace the code with the following code:
@@ -190,20 +190,67 @@ function buildResponse(isSuccess, message, recordFound, lastName, firstName, ema
 ```
 
 ## Edit the lambda role
-* Look for the tab Permissions
+* Look for the tab **Permissions**
 * Click on the hyperlink to the lambda role
-* Add Inline Policy
+* Add **Inline Policy**
 
 Add inline policies to the lambda role for:
+Field | Setting
+------------ | -------------
+Service|DynamoDB
+Actions|List and Read
+Resources|Add ARN to the **index** and to the **table**. 
 
-Service -> DynamoDB
-Actions -> List and Read
-Resources-> Add ARN to the index and to the table. 
-
+Typically the format for those ARN are as follows (with customerLookup table)
 arn:aws:dynamodb:us-east-1:<account_number>:table/customerLookup
 arn:aws:dynamodb:us-east-1:<account_number>:table/customerLookup/index/emailAddress-index
 
 ![Image of Lambda Role](https://github.com/juaestiv/connect-chat-resources/blob/master/images/LambdaRole.png)
+
+Review and Name the policy. The JSON will be similar to this:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:DescribeTable",
+                "dynamodb:GetItem",
+                "dynamodb:DescribeContributorInsights",
+                "dynamodb:DescribeContinuousBackups",
+                "dynamodb:Scan",
+                "dynamodb:ListTagsOfResource",
+                "dynamodb:Query",
+                "dynamodb:DescribeTimeToLive",
+                "dynamodb:DescribeTableReplicaAutoScaling"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:us-east-1:<account_number>:table/customerLookup/index/emailAddress-index",
+                "arn:aws:dynamodb:us-east-1:<account_number>:table/customerLookup"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:ListContributorInsights",
+                "dynamodb:DescribeReservedCapacityOfferings",
+                "dynamodb:ListGlobalTables",
+                "dynamodb:ListTables",
+                "dynamodb:DescribeReservedCapacity",
+                "dynamodb:ListBackups",
+                "dynamodb:DescribeLimits",
+                "dynamodb:ListStreams"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
 
 Come back to the lambda function and create a test event
 
@@ -257,7 +304,7 @@ Come back to the lambda function and create a test event
             "Description": null,
             "InitialContactId": "8693452c-7fd1-462b-adb6-fcf18996aabb",
             "InitiationMethod": "INBOUND",
-            "InstanceARN": "arn:aws:connect:us-east-1:150934812383:instance/0879ee04-aaaa-4668-8ef5-5ba3f60d0ca3",
+            "InstanceARN": "arn:aws:connect:us-east-1:<account_number>:instance/0879ee04-aaaa-4668-8ef5-5ba3f60d0ca3",
             "LanguageCode": "en-US",
             "MediaStreams": {
                 "Customer": {
