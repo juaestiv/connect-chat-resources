@@ -347,8 +347,6 @@ Open the **Chat Entry Point** flow that we created at the beginning.
 You have to add the following blocks just after the **Start** and before the **Welcome Prompt**
 * Set Logging behaviour. (Enabled)
 * Invoke Lambda Function. (Select the lambda created from the drowdown and set up the time out to 8)
-* A new prompt block to handle the lambda error. (Text To Speech: "We are experiencing technical difficulties, please try again later")
-* A disconnect block. 
 
 Edit the Welcome prompt like this:
 Welcome to XYX’s customer service **$.External.firstName**
@@ -357,6 +355,9 @@ Link the blocks as follows
 
 TBD
 
+You can download the flow from here:
+
+TBD
 
 
 
